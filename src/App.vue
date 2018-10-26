@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    
+    <Header />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
+import Header from "@/components/Header.vue";
+
 export default {
   name: 'app',
   components: {
-
+    Header
   }
 }
 </script>
@@ -17,17 +20,16 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 :root {
   --primary: #eb3f57;
-  --secondary: #515067
+  --secondary: #151424;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Krub', sans-serif;
   text-align: center;
   min-height: 100vh;
   color: #2c3e50;
