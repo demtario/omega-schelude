@@ -1,6 +1,6 @@
 {
   "name": "Omega Schelude",
-  "short_name": "omega-schelude",
+  "short_name": "Omega Schelude",
   "icons": [
     {
       "src": "/img/icons/omega-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#151424",
   "theme_color": "#eb3f57"

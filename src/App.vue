@@ -14,13 +14,14 @@ export default {
   components: {
     Header
   }
-}
+};
 </script>
 
 <style lang="scss">
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  background-color: var(--secondary);
 }
 
 :root {
@@ -33,6 +34,16 @@ body {
   text-align: center;
   min-height: 100vh;
   color: #2c3e50;
-  background-color: var(--secondary);
+  padding-top: 90px;
+  box-sizing: border-box;
+}
+
+.btn {
+  display: block;
+  color: #fff;
+  background-color: var(--primary);
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 16px;
 }
 </style>

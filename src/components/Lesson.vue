@@ -1,5 +1,8 @@
 <template>
     <div class="lesson" :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}">
+        <div class="lesson__nr">
+            {{ Math.round(Math.random()*5) }}
+        </div>
         <div class="lesson__hours">
             {{ lesson.hours[0].h }} <small>{{ lesson.hours[0].m }}</small> - {{ lesson.hours[1].h }} <small>{{ lesson.hours[1].m }}</small>
         </div>
@@ -46,8 +49,8 @@ export default {
 <style lang="scss" scoped>
     .lesson {
         display: grid;
-        grid-template-columns: 0.6fr 1fr 0.3fr;
-        grid-gap: 8px;
+        grid-template-columns: 10px 100px 1fr 0.3fr;
+        grid-gap: 4px;
         padding: 12px;
         color: #aaa;
         border-left: solid 4px transparent;
@@ -68,6 +71,12 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        &__nr {
+            left: 8px;
+            font-size: 0.8em;
+            color: #333142;
         }
 
         &__hours {
