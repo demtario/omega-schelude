@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <Header />
-    <router-view></router-view>
+    
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -34,7 +37,8 @@ body {
   text-align: center;
   min-height: 100vh;
   color: #2c3e50;
-  padding-top: 90px;
+  padding-top: 80px;
+  padding-bottom: 48px;
   box-sizing: border-box;
 }
 
@@ -45,5 +49,12 @@ body {
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 16px;
+}
+
+.fade-enter-active {
+  transition: opacity 1s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 </style>

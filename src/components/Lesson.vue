@@ -1,19 +1,37 @@
 <template>
     <div class="lesson" :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}">
         <div class="lesson__nr">
-            {{ Math.round(Math.random()*5) }}
+            {{ lesson.no }}
         </div>
         <div class="lesson__hours">
             {{ lesson.hours[0].h }} <small>{{ lesson.hours[0].m }}</small> - {{ lesson.hours[1].h }} <small>{{ lesson.hours[1].m }}</small>
         </div>
-        <div class="lesson__name">
-            {{ lesson.name }}
+        <div class="groups">
+            <div class="group" v-for="(group, i) in lesson.groups" :key="i">
+                <div class="lesson__name">
+                {{ group.name }}
+                </div>
+                <div class="lesson__room"><span>{{group.teacher}}</span> {{ group.room }}</div>
+            </div>
         </div>
-        <div class="lesson__room"><span>{{lesson.teacher}}</span> {{ lesson.room }}</div>
     </div>
 </template>
 
 <script>
+function getNextWeekday(day) {
+    var date = new Date();
+    var currday = date.getDay();
+    var prevMonday;
+    if(date.getDay() == day){
+        prevMonday = new Date().setDate(date.getDate());
+    }
+    else{
+        prevMonday = new Date().setDate(date.getDate() + currday);
+    }
+
+    return prevMonday;
+}
+
 export default {
     name: 'Lesson',
     data: () => {
@@ -38,18 +56,21 @@ export default {
         let first = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[0].h, this.lesson.hours[0].m)
         let last = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[1].h, this.lesson.hours[1].m)
 
-        if(today.getTime() > first.getTime() && today.getTime() < last.getTime()) this.isActive = true;
+        if(new Date() == getNextWeekday(this.day))
+            if(today.getTime() > first.getTime() && today.getTime() < last.getTime()) this.isActive = true;
     },
     props: {
-        lesson: Object
+        lesson: Object,
+        day: Number
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
     .lesson {
         display: grid;
-        grid-template-columns: 10px 100px 1fr 0.3fr;
+        grid-template-columns: 10px 100px 1fr;
         grid-gap: 4px;
         padding: 12px;
         color: #aaa;
@@ -59,7 +80,7 @@ export default {
 
         &--active {
             border-left: solid 4px var(--primary);
-            background-color: #14131b;
+            background-color: #131b13;
         }
 
         &--substitution {
@@ -82,13 +103,24 @@ export default {
         &__hours {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             font-size: 1em;
             font-weight: 300;
 
             small {
                 font-size: 0.7em;
+                position: relative;
+                top: -4px;
             }
+        }
+
+        .groups {
+            display: block;
+        }
+
+        .group {
+            display: grid;
+            grid-template-columns: 1fr 0.3fr;
         }
 
         &__name {

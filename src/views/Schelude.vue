@@ -1,71 +1,56 @@
 <template>
-    <div class="schelude">
+    <div class="schelude-wrapper">
+        <div class="schelude">
 
-        <h3 class="day">Monday</h3>
-        <Lesson v-for="(lesson, index) in lessons" :key="index" :lesson="lesson" />
-        <h3 class="day">Tuesday</h3>
-        <!-- <Lesson v-for="(lesson, index) in lessons" :key="index+20" :lesson="lesson" /> -->
-        <h3 class="day">Wednesday</h3>
-        <!-- <Lesson v-for="(lesson, index) in lessons" :key="index+40" :lesson="lesson" /> -->
-        <h3 class="day">Thursday</h3>
-        <h3 class="day">Friday</h3>
+            <div v-for="(day, i) in days" :key="i">
+                <h3 class="day">{{ week[i] }}</h3>
+                <Lesson v-for="(lesson, index) in day" :key="index+i*10" :lesson="lesson" :day="i" />
+            </div>
+        </div>
+        <Replacements :classname="$route.params.class" />
     </div>
 </template>
 
 <script>
 
+import Replacements from "@/components/Replacements.vue";
 import Lesson from "@/components/Lesson.vue";
+
 import axios from 'axios';
+import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions';
+
+const API = axios.create({
+    baseURL: 'https://amedrygal.pl/api/',
+    headers: { 'Cache-Control': 'no-cache' },
+    // cache will be enabled by default
+    adapter: cacheAdapterEnhancer(axios.defaults.adapter)
+});
 
 export default {
     name: 'Schelude',
     components: {
-        Lesson
+        Lesson, Replacements
     },
-    data: () => {
+    data () {
         return {
-            lessons: [
-                {
-                    hours: "8:00-8:45",
-                    name: "j.polski",
-                    teacher: "Ku",
-                    room: "311"
-                },
-                {
-                    hours: "9:55-9:40",
-                    name: "matematyka",
-                    teacher: "Wd",
-                    room: "111"
-                },
-                {
-                    hours: "10:50-11:35",
-                    name: "j.angielski",
-                    teacher: "Ga",
-                    room: "203"
-                },
-                {
-                    hours: "11:45-12:30",
-                    name: "u_hist.i sp.",
-                    teacher: "No",
-                    room: "106"
-                },
-                {
-                    hours: "12:40-13:25",
-                    name: "wit.i ap.int",
-                    teacher: "Bm",
-                    room: "218"
-                },
-                {
-                    hours: "13:35-14:20",
-                    name: "r_informatyka",
-                    teacher: "Kn",
-                    room: "pc4"
-                }
-            ]
+            days: [],
+            week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         }
     },
-    created: function () {
+    created () {
         this.$route.meta.title = this.$route.params.class
+    },
+    mounted () {
+
+        API.get(`4h.php`)
+            .then(res => {
+                // console.table(res.data)
+                this.days = res.data.days
+            })
+            .catch((err) => {
+                throw (err)
+            })
+
     }
 };
 </script>

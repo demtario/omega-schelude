@@ -1,11 +1,13 @@
 <template>
     <div class="header-wrapper">
         <div class="header">
-            <i class="fas fa-chevron-left" @click="goBack()"></i>
+            <font-awesome-icon icon="angle-left" @click="goBack()" />
             <h1>OmegaSchelude</h1>
-            <router-link to="/preferences"><i class="fas fa-cog"></i></router-link>
+            <router-link to="/preferences"><font-awesome-icon icon="cog" /></router-link>
         </div>
-        <h2>{{ $route.meta.title }}</h2>
+        <transition name="fade">
+            <h2>{{ $route.meta.title }}</h2>
+        </transition>
     </div>
 </template>
 
@@ -65,7 +67,7 @@ export default {
         padding: 0 14px;
         align-items: center;
 
-        i {
+        svg {
             color: #fff;
             font-size: 0.8em;
             cursor: pointer;
