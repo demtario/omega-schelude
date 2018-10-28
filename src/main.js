@@ -1,14 +1,19 @@
 import Vue from 'vue';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCog, faAngleLeft, faAngleDoubleUp, faSadCry } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+import VueTouch from 'vue-touch';
+
 import App from './App.vue';
 import router from './router';
 import './registerServiceWorker';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faCog, faAngleLeft, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.use(VueTouch);
 
-library.add(faCoffee, faCog, faAngleLeft, faAngleDoubleUp)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+library.add(faCog, faAngleLeft, faAngleDoubleUp, faSadCry);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 

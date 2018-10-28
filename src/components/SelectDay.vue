@@ -10,8 +10,8 @@
 
 <script>
 export default {
-    name: 'SelectDay'
-}
+  name: 'SelectDay',
+};
 </script>
 
 <style lang="scss" scoped>

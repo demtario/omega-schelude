@@ -1,22 +1,38 @@
 <template>
   <div id="app">
     <Header />
-    
-    <transition name="fade">
-      <router-view></router-view>
-    </transition>
+
+    <v-touch
+      @swiperight="goBack()"
+      @swipeleft="goFurther()"
+      :swipe-options="{direction: 'horizontal'}"
+    >
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
+    </v-touch>
   </div>
 </template>
 
 <script>
 
-import Header from "@/components/Header.vue";
+import Header from '@/components/Header.vue';
 
 export default {
   name: 'app',
   components: {
-    Header
-  }
+    Header,
+  },
+  methods: {
+    goBack() {
+      window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/');
+    },
+    goFurther() {
+      this.$router.go(1);
+    },
+  },
 };
 </script>
 

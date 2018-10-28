@@ -12,25 +12,23 @@
 </template>
 
 <script>
-import SelectDay from "@/components/SelectDay.vue";
+import SelectDay from '@/components/SelectDay.vue';
 
 export default {
-    name: 'Header',
-    components: {
-        SelectDay
+  name: 'Header',
+  components: {
+    SelectDay,
+  },
+  data: () => ({
+
+  }),
+  methods: {
+    goBack() {
+      window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/');
     },
-    data: () => {
-        return {
-            
-        }
-    },
-    methods: {
-        goBack: function () {
-            window.history.length > 1
-                ? this.$router.go(-1)
-                : this.$router.push('/')
-        }
-    }
+  },
 };
 </script>
 

@@ -4,7 +4,12 @@
 
             <div v-for="(day, i) in days" :key="i">
                 <h3 class="day">{{ week[i] }}</h3>
-                <Lesson v-for="(lesson, index) in day" :key="index+i*10" :lesson="lesson" :day="i" />
+                <Lesson
+                  v-for="(lesson, index) in day"
+                  :key="index+i*10"
+                  :lesson="lesson"
+                  :day="i"
+                />
             </div>
         </div>
         <Replacements :classname="$route.params.class" />
@@ -13,45 +18,43 @@
 
 <script>
 
-import Replacements from "@/components/Replacements.vue";
-import Lesson from "@/components/Lesson.vue";
+import Replacements from '@/components/Replacements.vue';
+import Lesson from '@/components/Lesson.vue';
 
 import axios from 'axios';
-import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions';
+import { cacheAdapterEnhancer } from 'axios-extensions';
 
 const API = axios.create({
-    baseURL: 'https://amedrygal.pl/api/',
-    headers: { 'Cache-Control': 'no-cache' },
-    // cache will be enabled by default
-    adapter: cacheAdapterEnhancer(axios.defaults.adapter)
+  baseURL: 'https://amedrygal.pl/api/',
+  headers: { 'Cache-Control': 'no-cache' },
+  // cache will be enabled by default
+  adapter: cacheAdapterEnhancer(axios.defaults.adapter),
 });
 
 export default {
-    name: 'Schelude',
-    components: {
-        Lesson, Replacements
-    },
-    data () {
-        return {
-            days: [],
-            week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        }
-    },
-    created () {
-        this.$route.meta.title = this.$route.params.class
-    },
-    mounted () {
-
-        API.get(`4h.php`)
-            .then(res => {
-                // console.table(res.data)
-                this.days = res.data.days
-            })
-            .catch((err) => {
-                throw (err)
-            })
-
-    }
+  name: 'Schelude',
+  components: {
+    Lesson, Replacements,
+  },
+  data() {
+    return {
+      days: [],
+      week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    };
+  },
+  created() {
+    this.$route.meta.title = this.$route.params.class;
+  },
+  mounted() {
+    API.get('4h.php')
+      .then((res) => {
+        // console.table(res.data)
+        this.days = res.data.days;
+      })
+      .catch((err) => {
+        throw (err);
+      });
+  },
 };
 </script>
 

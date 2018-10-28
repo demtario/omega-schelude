@@ -8,11 +8,11 @@
 
 <script>
 export default {
-    name: 'home',
-    created: () => {
-        
-    }
-}
+  name: 'home',
+  created: () => {
+
+  },
+};
 </script>
 
 <style lang="scss" scoped>

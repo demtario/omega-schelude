@@ -6,12 +6,12 @@
 
 <script>
 export default {
-    name:'preferences'
-}
+  name: 'preferences',
+};
 </script>
 
 <style lang="scss" scoped>
     // .preferences {
-        
+
     // }
 </style>

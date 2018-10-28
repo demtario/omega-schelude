@@ -1,10 +1,13 @@
 <template>
-    <div class="lesson" :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}">
+    <div class="lesson"
+        :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}"
+    >
         <div class="lesson__nr">
             {{ lesson.no }}
         </div>
         <div class="lesson__hours">
-            {{ lesson.hours[0].h }} <small>{{ lesson.hours[0].m }}</small> - {{ lesson.hours[1].h }} <small>{{ lesson.hours[1].m }}</small>
+            {{ lesson.hours[0].h }} <small>{{ lesson.hours[0].m }}</small>
+             - {{ lesson.hours[1].h }} <small>{{ lesson.hours[1].m }}</small>
         </div>
         <div class="groups">
             <div class="group" v-for="(group, i) in lesson.groups" :key="i">
@@ -19,51 +22,50 @@
 
 <script>
 function getNextWeekday(day) {
-    var date = new Date();
-    var currday = date.getDay();
-    var prevMonday;
-    if(date.getDay() == day){
-        prevMonday = new Date().setDate(date.getDate());
-    }
-    else{
-        prevMonday = new Date().setDate(date.getDate() + currday);
-    }
+  const date = new Date();
+  const currday = date.getDay();
+  let prevMonday;
+  if (date.getDay() === day) {
+    prevMonday = new Date().setDate(date.getDate());
+  } else {
+    prevMonday = new Date().setDate(date.getDate() + currday);
+  }
 
-    return prevMonday;
+  return prevMonday;
 }
 
 export default {
-    name: 'Lesson',
-    data: () => {
-        return {
-            isActive: false,
-            isSubstitution: false,
-        }
-    },
-    mounted() {
-        let hours = this.lesson.hours.split("-")
-        hours[0] = hours[0].split(":")
-        hours[1] = hours[1].split(":")
+  name: 'Lesson',
+  data: () => ({
+    isActive: false,
+    isSubstitution: false,
+  }),
+  mounted() {
+    const hours = this.lesson.hours.split('-');
+    hours[0] = hours[0].split(':');
+    hours[1] = hours[1].split(':');
 
-        this.lesson.hours = [
-            {h: hours[0][0], m:hours[0][1]},
-            {h: hours[1][0], m:hours[1][1]}
-        ]
+    this.lesson.hours = [
+      { h: hours[0][0], m: hours[0][1] },
+      { h: hours[1][0], m: hours[1][1] },
+    ];
 
-        
-        let today = new Date();
 
-        let first = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[0].h, this.lesson.hours[0].m)
-        let last = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[1].h, this.lesson.hours[1].m)
+    const today = new Date();
 
-        if(new Date() == getNextWeekday(this.day))
-            if(today.getTime() > first.getTime() && today.getTime() < last.getTime()) this.isActive = true;
-    },
-    props: {
-        lesson: Object,
-        day: Number
+    const first = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[0].h, this.lesson.hours[0].m);
+    const last = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[1].h, this.lesson.hours[1].m);
+
+    if (new Date() === getNextWeekday(this.day)) {
+      if (today.getTime() > first.getTime() && today.getTime() < last.getTime()) 
+        this.isActive = true;
     }
-}
+  },
+  props: {
+    lesson: Object,
+    day: Number,
+  },
+};
 
 </script>
 

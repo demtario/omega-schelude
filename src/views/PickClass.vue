@@ -1,6 +1,11 @@
 <template>
     <div class="pick">
-        <router-link class="class" v-for="(item, index) in classes" :to="'/schelude/'+item" :key="index">
+        <router-link
+          class="class"
+          v-for="(item, index) in classes"
+          :to="'/schelude/'+item"
+          :key="index"
+        >
             {{ item }}
         </router-link>
         <Replacements :classname="null" />
@@ -8,41 +13,39 @@
 </template>
 
 <script>
-import Replacements from "@/components/Replacements.vue";
+import Replacements from '@/components/Replacements.vue';
 
 import axios from 'axios';
-import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions';
+import { cacheAdapterEnhancer } from 'axios-extensions';
 
 const API = axios.create({
-    baseURL: 'https://amedrygal.pl/api/',
-    headers: { 'Cache-Control': 'no-cache' },
-    // cache will be enabled by default
-    adapter: cacheAdapterEnhancer(axios.defaults.adapter)
+  baseURL: 'https://amedrygal.pl/api/',
+  headers: { 'Cache-Control': 'no-cache' },
+  // cache will be enabled by default
+  adapter: cacheAdapterEnhancer(axios.defaults.adapter),
 });
 
 export default {
-    name: 'pick-class',
-    components: {
-        Replacements
-    },
-    data() {
-        return {
-            classes: []
-        }
-    },
-    mounted () {
-
-        API.get(`classes.php`)
-            .then(res => {
-                // console.table(res.data)
-                this.classes = res.data.classes
-            })
-            .catch((err) => {
-                throw (err)
-            })
-
-    }
-}
+  name: 'pick-class',
+  components: {
+    Replacements,
+  },
+  data() {
+    return {
+      classes: [],
+    };
+  },
+  mounted() {
+    API.get('classes.php')
+      .then((res) => {
+        // console.table(res.data)
+        this.classes = res.data.classes;
+      })
+      .catch((err) => {
+        throw (err);
+      });
+  },
+};
 </script>
 
 <style lang="scss" scoped>
