@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <img src="@/assets/omega-1024x1024.png" alt="">
+        <img src="@/assets/omega.svg" alt="">
         <h1>ZSE Mode</h1>
         <router-link to="/select-class" class="btn">Get started</router-link>
     </div>
@@ -16,6 +16,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "@/styles/_vars.scss";
+
     .home {
         display: flex;
         justify-content: center;
@@ -23,12 +25,14 @@ export default {
         flex-direction: column;
 
         h1 {
-            margin-top: -20px;
+            // margin-top: -20px;
             font-size: 1.6em;
+            color: $secondary*1.8;
         }
 
         img {
-            width: 70%;
+            width: 50%;
+            color: var(--primary);
             margin: 0 auto;
         }
     }

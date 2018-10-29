@@ -37,15 +37,17 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_vars.scss";
+
+:root {
+  --primary: #{$primary};
+  --secondary: #{$secondary};
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
   background-color: var(--secondary);
-}
-
-:root {
-  --primary: #eb3f57;
-  --secondary: #151424;
 }
 
 #app {
@@ -61,7 +63,7 @@ body {
 .btn {
   display: block;
   color: #fff;
-  background-color: var(--primary);
+  background: linear-gradient(to bottom right, $primary * 0.8, $primary);
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 16px;

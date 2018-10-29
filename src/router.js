@@ -16,19 +16,19 @@ export default new Router({
       path: '/preferences',
       name: 'preferences',
       component: () => import('@/views/Preferences.vue'),
-      meta: { title: 'Preferences' },
+      meta: { title: 'Preferencje' },
     },
     {
       path: '/select-class',
       name: 'pick-class',
       component: () => import('@/views/PickClass.vue'),
-      meta: { title: 'Select your Class' },
+      meta: { title: 'Wybierz klasę' },
     },
     {
       path: '/schelude/:class',
       name: 'schelude',
       component: () => import('@/views/Schelude.vue'),
-      meta: { title: 'Schelude' },
+      meta: { title: 'Plan' },
     },
   ],
 });

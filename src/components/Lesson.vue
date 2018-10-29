@@ -56,9 +56,8 @@ export default {
     const first = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[0].h, this.lesson.hours[0].m);
     const last = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[1].h, this.lesson.hours[1].m);
 
-    if (new Date() === getNextWeekday(this.day)) {
-      if (today.getTime() > first.getTime() && today.getTime() < last.getTime()) 
-        this.isActive = true;
+    if (new Date().getTime === getNextWeekday(this.day)) {
+      if (today.getTime() > first.getTime() && today.getTime() < last.getTime()) { this.isActive = true; }
     }
   },
   props: {
@@ -70,9 +69,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "@/styles/_vars.scss";
+
     .lesson {
         display: grid;
-        grid-template-columns: 10px 100px 1fr;
+        grid-template-columns: 10px 100px 1fr 5px;
         grid-gap: 4px;
         padding: 12px;
         color: #aaa;
@@ -82,12 +83,15 @@ export default {
 
         &--active {
             border-left: solid 4px var(--primary);
-            background-color: #131b13;
+            background-color: $secondary*0.8;
         }
 
         &--substitution {
-            // border-left: solid 4px #FBB901;
-            background-color: #FBB9010a;
+            border-left: solid 4px $yell;
+
+            .lesson__name {
+                color: $yell;
+            }
         }
 
         >* {
@@ -99,7 +103,7 @@ export default {
         &__nr {
             left: 8px;
             font-size: 0.8em;
-            color: #333142;
+            color: $secondary*1.8;
         }
 
         &__hours {
@@ -122,6 +126,7 @@ export default {
 
         .group {
             display: grid;
+            align-items: center;
             grid-template-columns: 1fr 0.3fr;
         }
 
@@ -134,6 +139,7 @@ export default {
             font-size: 0.8em;
             font-style: italic;
             font-weight: 300;
+            text-align: right;
 
             span {
                 color: var(--primary);

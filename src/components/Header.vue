@@ -1,9 +1,9 @@
 <template>
     <div class="header-wrapper">
         <div class="header">
-            <font-awesome-icon icon="angle-left" @click="goBack()" />
+            <font-awesome-icon icon="angle-left" @click="goBack()" class="icon" />
             <h1>OmegaSchelude</h1>
-            <router-link to="/preferences"><font-awesome-icon icon="cog" /></router-link>
+            <router-link to="/preferences" class="icon"><font-awesome-icon icon="cog" /></router-link>
         </div>
         <transition name="fade">
             <h2>{{ $route.meta.title }}</h2>
@@ -33,14 +33,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import "@/styles/_vars.scss";
+
     .header-wrapper {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         z-index: 100;
-        background-color: #1f1d2c;
-        border-bottom: solid 2px #1a1a22;
+        background-color: $secondary*1.2;
+        border-bottom: solid 2px $secondary*0.9;
 
         h2 {
             color: #fff;
@@ -62,8 +64,12 @@ export default {
         height: 48px;
         display: flex;
         justify-content: space-between;
-        padding: 0 14px;
+        padding: 0 6px;
         align-items: center;
+
+        .icon {
+            padding: 8px;
+        }
 
         svg {
             color: #fff;

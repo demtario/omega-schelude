@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       days: [],
-      week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      week: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'],
     };
   },
   created() {
@@ -70,7 +70,7 @@ export default {
         font-weight: 300;
         font-size: 16px;
         margin-top: 16px;
-        margin-bottom: 0px;
+        margin-bottom: 8px;
         border-bottom: solid 1px var(--primary);
     }
 </style>

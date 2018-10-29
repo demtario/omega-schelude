@@ -6,7 +6,10 @@
           :to="'/schelude/'+item"
           :key="index"
         >
-            {{ item }}
+            <div class="class__content">
+              <font-awesome-icon icon="calendar-alt" />
+              {{ item }}
+            </div>
         </router-link>
         <Replacements :classname="null" />
     </div>
@@ -57,20 +60,52 @@ export default {
         grid-gap: 8px;
         padding: 8px;
     }
+
     .class {
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+      -webkit-tap-highlight-color: transparent;
+      background: linear-gradient(to bottom right, $primary * 0.8, $primary);
+      border-radius: 50%;
+      border: solid 6px $secondary * 1.2;
+      padding-top: calc(100% - 2*6px);
+      position: relative;
+      box-sizing: border-box;
+
+      &--default {
+        background-color: $yell;
+        color: $secondary*2;
+
+        svg {
+          opacity: 0.4 !important;;
+        }
+      }
+
+      &__content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         padding: 16px;
-        color: #fff;
-        text-decoration: none;
-        transition: 0.3s;
-        -webkit-tap-highlight-color: transparent;
-        background-color: $primary;
+        box-sizing: border-box;
+        font-size: 0.8em;
 
-        &:active {
-            background-color: $primary * 1.4;
+        svg {
+          font-size: 6vw;
+          opacity: 0.6;
+          margin-bottom: 6px;
         }
+      }
+
+      &:active {
+          background-color: $primary * 1.4;
+      }
     }
 </style>
 
