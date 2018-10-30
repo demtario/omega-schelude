@@ -30,5 +30,12 @@ export default new Router({
       component: () => import('@/views/Schelude.vue'),
       meta: { title: 'Plan' },
     },
+
+    {
+      path: '/load',
+      name: 'loading',
+      component: () => import('@/components/Loading.vue'),
+      meta: { title: 'Loading test' },
+    },
   ],
 });

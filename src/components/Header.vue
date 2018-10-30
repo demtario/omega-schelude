@@ -6,7 +6,7 @@
             <router-link to="/preferences" class="icon"><font-awesome-icon icon="cog" /></router-link>
         </div>
         <transition name="fade">
-            <h2>{{ $route.meta.title }}</h2>
+            <h2>{{ title }}</h2>
         </transition>
     </div>
 </template>
@@ -18,6 +18,11 @@ export default {
   name: 'Header',
   components: {
     SelectDay,
+  },
+  computed: {
+    title () {
+      return this.$store.state.title
+    }
   },
   data: () => ({
 
@@ -64,18 +69,17 @@ export default {
         height: 48px;
         display: flex;
         justify-content: space-between;
-        padding: 0 6px;
+        padding: 0 2px;
         align-items: center;
 
         .icon {
-            padding: 8px;
+            padding: 12px;
         }
 
         svg {
-            color: #fff;
-            font-size: 0.8em;
+            color: $secondary*2.5;
+            font-size: 0.9em;
             cursor: pointer;
-            color: #aaa;
         }
 
         h1 {

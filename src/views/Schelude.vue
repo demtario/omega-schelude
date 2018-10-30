@@ -1,18 +1,21 @@
 <template>
     <div class="schelude-wrapper">
-        <div class="schelude">
 
+        <Loading v-if="loading"/>
+        <div class="schelude" v-else >
             <div v-for="(day, i) in days" :key="i">
                 <h3 class="day">{{ week[i] }}</h3>
                 <Lesson
                   v-for="(lesson, index) in day"
                   :key="index+i*10"
                   :lesson="lesson"
+                  :hours="hours"
                   :day="i"
                 />
             </div>
         </div>
         <Replacements :classname="$route.params.class" />
+
     </div>
 </template>
 
@@ -20,6 +23,7 @@
 
 import Replacements from '@/components/Replacements.vue';
 import Lesson from '@/components/Lesson.vue';
+import Loading from '@/components/Loading.vue';
 
 import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
@@ -34,22 +38,25 @@ const API = axios.create({
 export default {
   name: 'Schelude',
   components: {
-    Lesson, Replacements,
+    Lesson, Replacements, Loading
   },
   data() {
     return {
       days: [],
+      hours: [],
       week: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'],
+      loading: true
     };
   },
-  created() {
-    this.$route.meta.title = this.$route.params.class;
-  },
   mounted() {
-    API.get('4h.php')
+    this.$store.commit('setTitle', this.$route.params.class);
+
+    API.get(`4h.php?${this.$route.params.class}`)
       .then((res) => {
         // console.table(res.data)
         this.days = res.data.days;
+        this.hours = res.data.hours;
+        this.loading = false
       })
       .catch((err) => {
         throw (err);

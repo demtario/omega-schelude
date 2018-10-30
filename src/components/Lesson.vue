@@ -1,13 +1,12 @@
 <template>
     <div class="lesson"
-        :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}"
-    >
+        :class="{'lesson--active': isActive, 'lesson--substitution': isSubstitution}" >
         <div class="lesson__nr">
             {{ lesson.no }}
         </div>
         <div class="lesson__hours">
-            {{ lesson.hours[0].h }} <small>{{ lesson.hours[0].m }}</small>
-             - {{ lesson.hours[1].h }} <small>{{ lesson.hours[1].m }}</small>
+            {{ hour()[0].h }} <small>{{ hour()[0].m }}</small>
+             - {{ hour()[1].h }} <small>{{ hour()[1].m }}</small>
         </div>
         <div class="groups">
             <div class="group" v-for="(group, i) in lesson.groups" :key="i">
@@ -34,35 +33,56 @@ function getNextWeekday(day) {
   return prevMonday;
 }
 
+function getLastLessonEnd(hourset) {
+  const hours = hourset.split('-');
+  hours[0] = hours[0].split(':');
+  hours[1] = hours[1].split(':');
+
+  return {
+    h: hours[1][0],
+    m: hours[1][1]
+  }
+}
+
 export default {
   name: 'Lesson',
+  props: {
+    lesson: Object,
+    hours: Array,
+    day: Number,
+  },
   data: () => ({
     isActive: false,
     isSubstitution: false,
+    hour() {
+      const hours = this.hours[this.lesson.no].split('-');
+      hours[0] = hours[0].split(':');
+      hours[1] = hours[1].split(':');
+
+      return [
+        { h: hours[0][0], m: hours[0][1] },
+        { h: hours[1][0], m: hours[1][1] },
+      ]
+    },
   }),
   mounted() {
-    const hours = this.lesson.hours.split('-');
-    hours[0] = hours[0].split(':');
-    hours[1] = hours[1].split(':');
-
-    this.lesson.hours = [
-      { h: hours[0][0], m: hours[0][1] },
-      { h: hours[1][0], m: hours[1][1] },
-    ];
-
 
     const today = new Date();
+    let start = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.hour()[0].h, this.hour()[0].m);
+    let end = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.hour()[1].h, this.hour()[1].m);
 
-    const first = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[0].h, this.lesson.hours[0].m);
-    const last = new Date(today.getFullYear(), today.getMonth(), today.getDate(), this.lesson.hours[1].h, this.lesson.hours[1].m);
-
-    if (new Date().getTime === getNextWeekday(this.day)) {
-      if (today.getTime() > first.getTime() && today.getTime() < last.getTime()) { this.isActive = true; }
+    if(this.lesson.no != 0) {
+      // Jeśli to nie pierwsza lekcja (aka lekcja 0, nie mylić z pierwszą lekcją danego dnia)
+      let lastEnd = getLastLessonEnd(this.hours[this.lesson.no-1])
+      start = new Date(today.getFullYear(), today.getMonth(), today.getDate(), lastEnd.h, lastEnd.m)
     }
-  },
-  props: {
-    lesson: Object,
-    day: Number,
+
+    // Sprawdzanie czy obecna lekcja jest aktualna lub następna
+    if (new Date().getTime() === getNextWeekday(this.day+1)) {
+      if (today.getTime() > start.getTime() && today.getTime() < end.getTime())
+        this.isActive = true
+    
+    }
   },
 };
 
@@ -140,14 +160,14 @@ export default {
             font-style: italic;
             font-weight: 300;
             text-align: right;
+            display: flex;
 
             span {
                 color: var(--primary);
-                margin-right: 6px;
+                margin-right: 4px;
                 text-transform: uppercase;
             }
         }
 
     }
 </style>
-

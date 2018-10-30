@@ -7,6 +7,9 @@
 <script>
 export default {
   name: 'preferences',
+  mounted() {
+    this.$store.commit('setTitle', this.$route.meta.title)
+  }
 };
 </script>
 

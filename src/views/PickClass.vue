@@ -1,5 +1,8 @@
 <template>
-    <div class="pick">
+    <div class="wrapper">
+
+      <Loading v-if="loading" />
+      <div class="pick" v-else >
         <router-link
           class="class"
           v-for="(item, index) in classes"
@@ -11,12 +14,15 @@
               {{ item }}
             </div>
         </router-link>
-        <Replacements :classname="null" />
+      </div>
+      <Replacements :classname="null" />
+
     </div>
 </template>
 
 <script>
 import Replacements from '@/components/Replacements.vue';
+import Loading from '@/components/Loading.vue';
 
 import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
@@ -31,18 +37,22 @@ const API = axios.create({
 export default {
   name: 'pick-class',
   components: {
-    Replacements,
+    Replacements, Loading
   },
   data() {
     return {
       classes: [],
+      loading: true,
     };
   },
   mounted() {
+    this.$store.commit('setTitle', this.$route.meta.title)
+
     API.get('classes.php')
       .then((res) => {
         // console.table(res.data)
         this.classes = res.data.classes;
+        this.loading = false;
       })
       .catch((err) => {
         throw (err);

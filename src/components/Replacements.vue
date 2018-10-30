@@ -129,7 +129,7 @@ export default {
       }
 
       svg {
-        color: $secondary*0.9;
+        color: $secondary*1.8;
         transform: rotate(0deg);
         transition: 0.3s;
         margin-right: 2px;
@@ -222,15 +222,18 @@ export default {
       text-transform: uppercase;
       color: #ddd;
       margin: 0;
-      font-style: italic;
+      font-style: normal;
       font-size: 10px;
       margin-right: 8px;
+      display: block;
     }
 
     span {
       color: #fff;
       font-size: 12px;
       line-height: 10px;
+      position: relative;
+      top: -5px;
     }
   }
 </style>

@@ -9,9 +9,9 @@
 <script>
 export default {
   name: 'home',
-  created: () => {
-
-  },
+  mounted() {
+    this.$store.commit('setTitle', this.$route.meta.title)
+  }
 };
 </script>
 
