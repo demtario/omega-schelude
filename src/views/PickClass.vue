@@ -2,6 +2,8 @@
     <div class="wrapper">
 
       <Loading v-if="loading" />
+      <Error v-if="error && !loading" message="Brak internetu!" />
+
       <div class="pick" v-else >
         <router-link
           class="class"
@@ -9,20 +11,22 @@
           :to="'/schelude/'+item"
           :key="index"
         >
-            <div class="class__content">
-              <font-awesome-icon icon="calendar-alt" />
-              {{ item }}
-            </div>
+          <div class="class__content">
+            <!-- <font-awesome-icon icon="calendar-alt" /> -->
+            {{ item }}
+          </div>
         </router-link>
       </div>
-      <Replacements :classname="null" />
+      <!-- <Replacements :classname="null" /> -->
 
     </div>
 </template>
 
 <script>
 import Replacements from '@/components/Replacements.vue';
+
 import Loading from '@/components/Loading.vue';
+import Error from '@/components/Error.vue';
 
 import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
@@ -37,12 +41,13 @@ const API = axios.create({
 export default {
   name: 'pick-class',
   components: {
-    Replacements, Loading
+    Replacements, Loading, Error
   },
   data() {
     return {
       classes: [],
-      loading: true,
+      loading: false,
+      error: false,
     };
   },
   mounted() {
@@ -50,12 +55,15 @@ export default {
 
     API.get('classes.php')
       .then((res) => {
-        // console.table(res.data)
+        // console.log(res.data)
         this.classes = res.data.classes;
         this.loading = false;
       })
       .catch((err) => {
-        throw (err);
+        // throw (err);
+        // alert("Brak internetu!");
+        this.loading = false;
+        this.error = true;
       });
   },
 };
@@ -104,7 +112,8 @@ export default {
         flex-direction: column;
         padding: 16px;
         box-sizing: border-box;
-        font-size: 0.8em;
+        font-size: 1.4em;
+        font-weight: 300;
 
         svg {
           font-size: 6vw;

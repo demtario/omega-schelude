@@ -31,11 +31,18 @@ export default new Router({
       meta: { title: 'Plan' },
     },
 
+    // Debug
     {
-      path: '/load',
+      path: '/loading',
       name: 'loading',
       component: () => import('@/components/Loading.vue'),
       meta: { title: 'Loading test' },
+    },
+    {
+      path: '/error',
+      name: 'error',
+      component: () => import('@/components/Error.vue'),
+      meta: { title: 'Error test' },
     },
   ],
 });

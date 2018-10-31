@@ -2,6 +2,8 @@
     <div class="schelude-wrapper">
 
         <Loading v-if="loading"/>
+        <Error v-if="error && !loading" message="Brak internetu!" />
+
         <div class="schelude" v-else >
             <div v-for="(day, i) in days" :key="i">
                 <h3 class="day">{{ week[i] }}</h3>
@@ -23,7 +25,9 @@
 
 import Replacements from '@/components/Replacements.vue';
 import Lesson from '@/components/Lesson.vue';
+
 import Loading from '@/components/Loading.vue';
+import Error from '@/components/Error.vue';
 
 import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
@@ -38,14 +42,15 @@ const API = axios.create({
 export default {
   name: 'Schelude',
   components: {
-    Lesson, Replacements, Loading
+    Lesson, Replacements, Loading, Error
   },
   data() {
     return {
       days: [],
       hours: [],
       week: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'],
-      loading: true
+      loading: true,
+      error: false,
     };
   },
   mounted() {
@@ -53,13 +58,16 @@ export default {
 
     API.get(`4h.php?${this.$route.params.class}`)
       .then((res) => {
-        // console.table(res.data)
+        // console.log(res.data)
         this.days = res.data.days;
         this.hours = res.data.hours;
         this.loading = false
       })
       .catch((err) => {
-        throw (err);
+        // throw (err);
+        // alert("Brak internetu!");
+        this.loading = false;
+        this.error = true;
       });
   },
 };

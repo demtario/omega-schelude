@@ -6,6 +6,7 @@
       @swiperight="goBack()"
       @swipeleft="goFurther()"
       :swipe-options="{direction: 'horizontal'}"
+      class="content"
     >
       <transition name="fade">
         <router-view></router-view>
@@ -46,7 +47,7 @@ export default {
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: var(--secondary);
 }
 
@@ -58,6 +59,29 @@ body {
   padding-top: 80px;
   padding-bottom: 48px;
   box-sizing: border-box;
+}
+
+.content {
+  overflow: hidden;
+  overflow-y: visible;
+  display: block;
+  height: calc(100vh - 80px);
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: var(--secondary); 
+}
+::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.8); 
+    border-radius: 2px;
+    transition: 0.3s;
+
+    &:hover {
+      background: $primary;
+    }
 }
 
 .btn {
