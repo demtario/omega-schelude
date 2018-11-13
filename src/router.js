@@ -19,13 +19,19 @@ export default new Router({
       meta: { title: 'Preferencje' },
     },
     {
-      path: '/select-class',
+      path: '/select-school',
+      name: 'pick-school',
+      component: () => import('@/views/PickSchool.vue'),
+      meta: { title: 'Wybierz szkołę' },
+    },
+    {
+      path: '/select-class/:school',
       name: 'pick-class',
       component: () => import('@/views/PickClass.vue'),
       meta: { title: 'Wybierz klasę' },
     },
     {
-      path: '/schelude/:class',
+      path: '/schelude/:school/:class',
       name: 'schelude',
       component: () => import('@/views/Schelude.vue'),
       meta: { title: 'Plan' },

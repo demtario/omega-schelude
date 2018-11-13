@@ -8,7 +8,7 @@
         <router-link
           class="class"
           v-for="(item, index) in classes"
-          :to="'/schelude/'+item"
+          :to="'/schelude/'+school+'/'+item"
           :key="index"
         >
           <div class="class__content">
@@ -48,9 +48,11 @@ export default {
       classes: [],
       loading: false,
       error: false,
+      school: this.$route.params.school
     };
   },
   mounted() {
+    this.$store.commit('setSchool', this.$route.params.school);
     this.$store.commit('setTitle', this.$route.meta.title)
 
     API.get('classes.php')

@@ -1,8 +1,8 @@
 <template>
     <div class="home">
         <img src="@/assets/omega.svg" alt="">
-        <h1>ZSE Mode</h1>
-        <router-link to="/select-class" class="btn">Get started</router-link>
+        <h1>MultiSchool Mode</h1>
+        <router-link to="/select-school" class="btn">Get started</router-link>
     </div>
 </template>
 

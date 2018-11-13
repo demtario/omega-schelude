@@ -84,6 +84,12 @@ body {
     }
 }
 
+@media (max-width: 720px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
 .btn {
   display: block;
   color: #fff;

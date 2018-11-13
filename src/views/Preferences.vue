@@ -15,6 +15,6 @@ export default {
 
 <style lang="scss" scoped>
     .preferences {
-        min-height: calc(100vh - 60px);
+        min-height: calc(100vh - 80px);
     }
 </style>

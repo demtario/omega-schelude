@@ -55,6 +55,7 @@ export default {
   },
   mounted() {
     this.$store.commit('setTitle', this.$route.params.class);
+    this.$store.commit('setClass', this.$route.params.class);
 
     API.get(`4h.php?${this.$route.params.class}`)
       .then((res) => {
@@ -75,7 +76,7 @@ export default {
 
 <style lang="scss" scoped>
     .schelude {
-        margin-bottom: 30vh;
+        margin-bottom: 20vh;
     }
     .day {
         color: var(--primary);
