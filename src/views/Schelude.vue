@@ -16,7 +16,7 @@
                 />
             </div>
         </div>
-        <Replacements :classname="$route.params.class" />
+        <Replacements :classname="$store.state.class" />
 
     </div>
 </template>
@@ -33,7 +33,7 @@ import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
 
 const API = axios.create({
-  baseURL: 'https://amedrygal.pl/api/',
+  baseURL: 'http://localhost:3000/',
   headers: { 'Cache-Control': 'no-cache' },
   // cache will be enabled by default
   adapter: cacheAdapterEnhancer(axios.defaults.adapter),
@@ -54,10 +54,14 @@ export default {
     };
   },
   mounted() {
-    this.$store.commit('setTitle', this.$route.params.class);
-    this.$store.commit('setClass', this.$route.params.class);
+    // Sprawdzanie czy wybrano klasę
+    if(this.$store.state.class == null || this.$store.state.classStr === '') {
+      this.$router.push("/select-class")
+    }
 
-    API.get(`4h.php?${this.$route.params.class}`)
+    this.$store.commit('setTitle', this.$store.state.className);
+
+    API.get(`schelude/${this.$store.state.school}/${this.$store.state.class}`)
       .then((res) => {
         // console.log(res.data)
         this.days = res.data.days;

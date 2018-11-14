@@ -25,13 +25,13 @@ export default new Router({
       meta: { title: 'Wybierz szkołę' },
     },
     {
-      path: '/select-class/:school',
+      path: '/select-class',
       name: 'pick-class',
       component: () => import('@/views/PickClass.vue'),
       meta: { title: 'Wybierz klasę' },
     },
     {
-      path: '/schelude/:school/:class',
+      path: '/schelude',
       name: 'schelude',
       component: () => import('@/views/Schelude.vue'),
       meta: { title: 'Plan' },

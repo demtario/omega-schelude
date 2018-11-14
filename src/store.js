@@ -7,20 +7,26 @@ export default new Vuex.Store({
   state: {
     title: '',
     school: null,
-    class: null
+    schoolName: '',
+    class: null,
+    className: '',
   },
   mutations: {
     setTitle(state, newTitle) {
       // eslint-disable-next-line
       state.title = newTitle;
     },
-    setSchool(state, newSchool) {
+    setSchool(state, school) {
       // eslint-disable-next-line
-      state.school = newSchool;
+      state.school = school.id;
+      // eslint-disable-next-line
+      state.schoolName = school.name;
     },
     setClass(state, newClass) {
       // eslint-disable-next-line
-      state.class = newClass;
+      state.class = newClass.id;
+      // eslint-disable-next-line
+      state.className = newClass.name
     },
   },
 });

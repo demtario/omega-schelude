@@ -7,9 +7,10 @@
       <div class="pick" v-else >
         <router-link
           class="school"
-          v-for="(item, index) in schools"
-          :to="'/select-class/'+item.shortname"
-          :key="index"
+          v-for="(item) in schools"
+          @click.native="handleSelectSchool(item.name, item.id)"
+          to="/select-class"
+          :key="item.id"
         >
           <div class="school__name">
             {{ item.name }}
@@ -38,7 +39,7 @@ import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
 
 const API = axios.create({
-  baseURL: 'https://amedrygal.pl/api/',
+  baseURL: 'http://localhost:3000/',
   headers: { 'Cache-Control': 'no-cache' },
   // cache will be enabled by default
   adapter: cacheAdapterEnhancer(axios.defaults.adapter),
@@ -51,26 +52,35 @@ export default {
   },
   data() {
     return {
-      schools: [{name: 'Zespół Szkół Elektronicznych', city:'Bydgoszcz', shortname: 'ZSE-Byd'}, {name: 'Zespół Szkół Budowlanych', city:'Bydgoszcz', shortname: 'ZSB-Byd'}, {name: 'Zespół Szkół Handlowych', city:'Bydgoszcz', shortname: 'ZSH-Byd'}],
+      schools: [],
       loading: false,
       error: false,
     };
   },
+  methods: {
+    handleSelectSchool(name, id) {
+      this.$store.commit('setSchool', {id, name})
+    }
+  },
   mounted() {
     this.$store.commit('setTitle', this.$route.meta.title)
 
-    // API.get('classes.php')
-    //   .then((res) => {
-    //     // console.log(res.data)
-    //     this.classes = res.data.classes;
-    //     this.loading = false;
-    //   })
-    //   .catch((err) => {
-    //     // throw (err);
-    //     // alert("Brak internetu!");
-    //     this.loading = false;
-    //     this.error = true;
-    //   });
+    // reset danych 
+    this.$store.commit('setClass', {id:null, name:''});
+    this.$store.commit('setSchool', {id:null, name:''});
+
+    API.get('schools')
+      .then((res) => {
+        // console.log(res.data)
+        this.schools = res.data;
+        this.loading = false;
+      })
+      .catch((err) => {
+        // throw (err);
+        // alert("Brak internetu!");
+        this.loading = false;
+        this.error = true;
+      });
   },
 };
 </script>

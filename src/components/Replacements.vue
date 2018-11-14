@@ -74,7 +74,7 @@ export default {
     },
   },
   props: {
-    classname: String,
+    classname: Number,
   },
   mounted() {
     this.data.forEach((item) => {

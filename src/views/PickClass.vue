@@ -7,13 +7,14 @@
       <div class="pick" v-else >
         <router-link
           class="class"
-          v-for="(item, index) in classes"
-          :to="'/schelude/'+school+'/'+item"
-          :key="index"
+          v-for="(item) in classes"
+          @click.native="handleClassSelect(item.name, item.id)"
+          to="/schelude/"
+          :key="item.id"
         >
           <div class="class__content">
             <!-- <font-awesome-icon icon="calendar-alt" /> -->
-            {{ item }}
+            {{ item.name }}
           </div>
         </router-link>
       </div>
@@ -32,7 +33,7 @@ import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
 
 const API = axios.create({
-  baseURL: 'https://amedrygal.pl/api/',
+  baseURL: 'http://localhost:3000/',
   headers: { 'Cache-Control': 'no-cache' },
   // cache will be enabled by default
   adapter: cacheAdapterEnhancer(axios.defaults.adapter),
@@ -46,16 +47,28 @@ export default {
   data() {
     return {
       classes: [],
-      loading: false,
+      loading: true,
       error: false,
       school: this.$route.params.school
     };
   },
+  methods: {
+    handleClassSelect(name, id) {
+      this.$store.commit('setClass', {id, name});
+    }
+  },
   mounted() {
-    this.$store.commit('setSchool', this.$route.params.school);
-    this.$store.commit('setTitle', this.$route.meta.title)
+    // Sprawdzanie czy wybrano szkołę
+    if(this.$store.state.school == null) {
+      this.$router.push("/select-school")
+    }
 
-    API.get('classes.php')
+    this.$store.commit('setTitle', this.$store.state.schoolName)
+
+    // reset klasy
+    this.$store.commit('setClass',  {id:null, name:''});
+
+    API.get(`classes/${this.$store.state.school}`)
       .then((res) => {
         // console.log(res.data)
         this.classes = res.data.classes;
@@ -114,7 +127,7 @@ export default {
         flex-direction: column;
         padding: 16px;
         box-sizing: border-box;
-        font-size: 1.4em;
+        font-size: 1.2em;
         font-weight: 300;
 
         svg {
