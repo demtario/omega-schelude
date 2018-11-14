@@ -29,16 +29,6 @@ import Lesson from '@/components/Lesson.vue';
 import Loading from '@/components/Loading.vue';
 import Error from '@/components/Error.vue';
 
-import axios from 'axios';
-import { cacheAdapterEnhancer } from 'axios-extensions';
-
-const API = axios.create({
-  baseURL: 'http://localhost:3000/',
-  headers: { 'Cache-Control': 'no-cache' },
-  // cache will be enabled by default
-  adapter: cacheAdapterEnhancer(axios.defaults.adapter),
-});
-
 export default {
   name: 'Schelude',
   components: {
@@ -61,7 +51,7 @@ export default {
 
     this.$store.commit('setTitle', this.$store.state.className);
 
-    API.get(`schelude/${this.$store.state.school}/${this.$store.state.class}`)
+    this.$api.get(`schelude/${this.$store.state.school}/${this.$store.state.class}`)
       .then((res) => {
         // console.log(res.data)
         this.days = res.data.days;

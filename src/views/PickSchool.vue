@@ -35,16 +35,6 @@
 import Loading from '@/components/Loading.vue';
 import Error from '@/components/Error.vue';
 
-import axios from 'axios';
-import { cacheAdapterEnhancer } from 'axios-extensions';
-
-const API = axios.create({
-  baseURL: 'http://localhost:3000/',
-  headers: { 'Cache-Control': 'no-cache' },
-  // cache will be enabled by default
-  adapter: cacheAdapterEnhancer(axios.defaults.adapter),
-});
-
 export default {
   name: 'pick-class',
   components: {
@@ -69,7 +59,7 @@ export default {
     this.$store.commit('setClass', {id:null, name:''});
     this.$store.commit('setSchool', {id:null, name:''});
 
-    API.get('schools')
+    this.$api.get('schools')
       .then((res) => {
         // console.log(res.data)
         this.schools = res.data;
