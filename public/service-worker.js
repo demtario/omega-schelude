@@ -25,11 +25,11 @@ workbox.routing.registerRoute(
   }),
 ); 
 
-const API = 'https://amedrygal.pl/api'
+const API = 'https://api.plan.heseya.com'
 
 // Zastępstwa
 workbox.routing.registerRoute(
-  new RegExp(`${API}/replacements.php`, 'i'),
+  new RegExp(`${API}/replacements`, 'i'),
   async ({event}) => {
     try {
       return await workbox.strategies.cacheFirst({
@@ -39,7 +39,7 @@ workbox.routing.registerRoute(
             statuses: [0, 200],
           }),
           new workbox.expiration.Plugin({
-            maxAgeSeconds: 60 * 60 * 8, // 1 miesiąc
+            maxAgeSeconds: 60 * 60 * 8, // 8 godzin
           }),
         ],
       }).handle({event});
@@ -51,7 +51,7 @@ workbox.routing.registerRoute(
 
 // Plan
 workbox.routing.registerRoute(
-  new RegExp(`${API}/4h.php`, 'i'),
+  new RegExp(`${API}/schelude`, 'i'),
   async ({event}) => {
     try {
       return await workbox.strategies.cacheFirst({
@@ -73,7 +73,7 @@ workbox.routing.registerRoute(
 
 // Klasy
 workbox.routing.registerRoute(
-  new RegExp(`${API}/classes.php`, 'i'),
+  new RegExp(`${API}/classes`, 'i'),
   async ({event}) => {
     try {
       return await workbox.strategies.cacheFirst({
@@ -83,7 +83,29 @@ workbox.routing.registerRoute(
             statuses: [0, 200],
           }),
           new workbox.expiration.Plugin({
-            maxAgeSeconds: 60 * 60 * 24 * 30 * 6, // 1 miesiąc
+            maxAgeSeconds: 60 * 60 * 24 * 30 * 6, // 6 miesięcy
+          }),
+        ],
+      }).handle({event});
+    } catch (error) {
+      return Response.error();
+    }
+  }
+);
+
+// Szkoły
+workbox.routing.registerRoute(
+  new RegExp(`${API}/schools`, 'i'),
+  async ({event}) => {
+    try {
+      return await workbox.strategies.cacheFirst({
+        cacheName: 'api-schools',
+        plugins: [
+          new workbox.cacheableResponse.Plugin({
+            statuses: [0, 200],
+          }),
+          new workbox.expiration.Plugin({
+            maxAgeSeconds: 60 * 60 * 24 * 30 * 6, // 6 miesięcy
           }),
         ],
       }).handle({event});
