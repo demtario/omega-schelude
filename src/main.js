@@ -25,7 +25,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueTouch);
 
 // Global axios
-const localMode = false;
+const localMode = true;
 const apiURL = localMode ? 'http://localhost:3000/' : 'https://api.plan.heseya.com/';
 
 Vue.prototype.$api = axios.create({

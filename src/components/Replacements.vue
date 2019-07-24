@@ -20,22 +20,22 @@
                 - {{ item.hours[1].h }} <small>{{ item.hours[1].m }}</small></span>
               </div>
               <div class="box origin">
-                <p>lekcja</p>
-                <span>matematyka</span>
+                <p>nauczyciel</p>
+                <span>{{ item.originally }}</span>
               </div>
             </div>
             <div class="teacher__body">
               <div class="box name">
-                <p>zastępca</p>
-                <span>{{ item.teacher }}</span>
+                <p>opis</p>
+                <span>{{ item.description }}</span>
               </div>
-              <div class="smallbox">
+              <div class="smallbox" v-if="item.meta != '&nbsp;'">
                 <i>uwagi</i>
                 <span>{{ item.meta }}</span>
               </div>
-              <div class="smallbox">
-                <i>opis</i>
-                <span>{{ item.description }}</span>
+              <div class="smallbox" v-if="item.teacher != '&nbsp;'">
+                <i>zastępca</i>
+                <span>{{ item.teacher }}</span>
               </div>
             </div>
         </div>
@@ -77,16 +77,28 @@ export default {
     classname: Number,
   },
   mounted() {
-    this.data.forEach((item) => {
-      const hours = item.hours.split('-');
-      hours[0] = hours[0].split(':');
-      hours[1] = hours[1].split(':');
+    this.$api.get('replacements/'+this.$store.state.school+'/'+this.$store.state.classname)
+      .then((res) => {
+        this.data = res.data;
 
-      item.hours = [
-        { h: hours[0][0], m: hours[0][1] },
-        { h: hours[1][0], m: hours[1][1] },
-      ];
-    });
+        this.data.forEach((item) => {
+          const hours = item.hours.split('-');
+          hours[0] = hours[0].split(':');
+          hours[1] = hours[1].split(':');
+
+          item.hours = [
+            { h: hours[0][0], m: hours[0][1] },
+            { h: hours[1][0], m: hours[1][1] },
+          ];
+        });
+        // this.loading = false;
+      })
+      .catch((err) => {
+        throw (err);
+        // alert("Brak internetu!");
+        // this.loading = false;
+        // this.error = true;
+      });
   },
 };
 </script>
@@ -140,6 +152,7 @@ export default {
       height: 60vh;
       box-sizing: border-box;
       padding: 8px;
+      overflow: scroll;
 
       p {
         color: #aaa;
@@ -155,9 +168,10 @@ export default {
     background-color: $primary * 0.8;
     background: linear-gradient(to right, $primary * 0.7, $primary * 0.8);
     display: grid;
-    grid-template-columns: 0.3fr  1fr;
+    grid-template-columns: 0.3fr  0.7fr;
     border-radius: 6px;
     overflow: hidden;
+    margin-bottom: 8px;
 
     &__head {
       background-color: $primary*0.9;

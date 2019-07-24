@@ -1,0 +1,32 @@
+{
+    "schools": [
+        {
+            "id": 0,
+            "name": "Technikum Elektroniczne",
+            "city": "Bydgoszcz",
+            "link": "http://zse.bydgoszcz.pl/plan",
+            "repLink": "http://zse.bydgoszcz.pl/~zastepstwa/"
+        },
+        {
+            "id": 1,
+            "name": "Zespół Szkół Handlowych",
+            "city": "Bydgoszcz",
+            "link": "http://www.zsh.bydgoszcz.pl/plan",
+            "repLink": null
+        },
+        {
+            "id": 2,
+            "name": "Zespół Szkół nr 1",
+            "city": "Bydgoszcz",
+            "link": "http://www.zsnr1.bydgoszcz.pl/images/planlekcji_2017/",
+            "repLink": null
+        },
+        {
+            "id": 3,
+            "name": "VI Liceum Ogólnokształcące",
+            "city": "Bydgoszcz",
+            "link": "http://vilo.bydgoszcz.pl/pliki/plan_lekcji/",
+            "repLink": null
+        }
+    ]
+}
